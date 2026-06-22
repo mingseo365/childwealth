@@ -57,6 +57,16 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
 .bubble::after{ content:""; position:absolute; width:0; height:0; border:9px solid transparent; }
 .bubble-tl::after{ bottom:-14px; left:22px; border-top-color:var(--butter); border-bottom:0; }
 .bubble-tr::after{ bottom:-14px; right:22px; border-top-color:var(--coral); border-bottom:0; }
+
+/* CTA 주목 펄스 */
+@keyframes ctaPulse{ 0%,100%{ box-shadow:0 8px 24px -6px rgba(59,91,255,.55), 0 0 0 0 rgba(59,91,255,.35); } 50%{ box-shadow:0 10px 28px -6px rgba(59,91,255,.7), 0 0 0 10px rgba(59,91,255,0); } }
+.cta-pulse{ animation:ctaPulse 2s ease-in-out infinite; }
+/* CTA 빛 스윕 */
+@keyframes ctaShine{ 0%{ transform:translateX(-120%) skewX(-20deg);} 60%,100%{ transform:translateX(320%) skewX(-20deg);} }
+.cta-shine::before{ content:""; position:absolute; top:0; left:0; width:40%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent); animation:ctaShine 2.8s ease-in-out infinite; }
+@media (prefers-reduced-motion:reduce){
+  .cta-pulse,.cta-shine::before{ animation:none; }
+}
 </style>
 </head>
 <body class="bg-[#F1ECE0] flex justify-center items-center min-h-screen">
@@ -92,7 +102,7 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
       </div>
 
       <div class="mt-auto">
-        <p class="pop d2 text-[13px] font-extrabold text-[var(--blue)] mb-2 tracking-tight">부자의 첫걸음은 사이다뱅크 아이통장부터</p>
+        <p class="pop d2 text-[13px] font-extrabold text-[var(--blue)] mb-2 tracking-tight">부자되기 첫걸음은 사이다뱅크 아이통장부터</p>
         <h1 class="pop d2 tight text-[40px] leading-[1.18] font-extrabold text-[var(--ink)]">
           우리 아이는<br>
           <span class="relative inline-block">
@@ -188,7 +198,7 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
 
   <!-- ============ RESULT ============ -->
   <section id="step-result" class="hidden absolute inset-0 flex-col bg-[var(--cream)]">
-    <div class="flex-1 overflow-y-auto hide-scrollbar pb-44">
+    <div class="flex-1 overflow-y-auto hide-scrollbar pb-52">
       <!-- 헤더 -->
       <div class="bg-[var(--blue)] text-white px-8 pt-14 pb-12 relative overflow-hidden rounded-b-[2.5rem]">
         <div class="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-white/10"></div>
@@ -232,31 +242,35 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
           </div>
         </div>
 
-        <!-- 버튼 행 -->
+        <!-- 버튼 행 (보조) -->
         <div class="flex gap-3 mt-5 pop d4">
-          <button class="btn-press flex items-center justify-center gap-1.5 px-5 bg-white border-2 border-[var(--line)] text-[var(--ink)] font-bold py-3.5 rounded-2xl text-sm" onclick="restart()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 2.3 5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 18v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <button class="btn-press flex-1 flex items-center justify-center gap-1.5 bg-white border border-[var(--line)] text-[var(--muted)] font-bold py-3 rounded-2xl text-[13px]" onclick="restart()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 1 2.3 5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 18v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             다시 하기
           </button>
-          <button class="btn-press flex-1 flex items-center justify-center gap-2 bg-[#FEE500] text-[#191919] font-bold py-3.5 rounded-2xl text-sm" onclick="alert('목업 기능입니다. 실 서비스 시 카카오톡 공유 API가 연동됩니다.')">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 4C6.5 4 2 7.6 2 12c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.5-.8 2.9 0 0-.02.2.1.27.13.08.27.02.27.02.36-.05 2.9-1.9 3.9-2.6.6.08 1.2.13 1.8.13 5.5 0 10-3.6 10-8s-4.5-8-10-8Z" fill="#191919"/></svg>
-            카톡 자랑
+          <button class="btn-press flex-1 flex items-center justify-center gap-1.5 bg-white border border-[var(--line)] text-[var(--muted)] font-bold py-3 rounded-2xl text-[13px]" onclick="alert('목업 기능입니다. 실 서비스 시 카카오톡 공유 API가 연동됩니다.')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 4C6.5 4 2 7.6 2 12c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.5-.8 2.9 0 0-.02.2.1.27.13.08.27.02.27.02.36-.05 2.9-1.9 3.9-2.6.6.08 1.2.13 1.8.13 5.5 0 10-3.6 10-8s-4.5-8-10-8Z" fill="currentColor"/></svg>
+            공유하기
           </button>
         </div>
       </div>
     </div>
 
     <!-- CTA 하단 고정 -->
-    <div class="absolute bottom-0 left-0 right-0 bg-[var(--cream)]/95 backdrop-blur border-t border-[var(--line)] px-6 pt-4 pb-8">
-      <a href="https://saidabankdirect.com/accounts-minors/" target="_blank" rel="noopener noreferrer" class="btn-press block w-full bg-[var(--ink)] text-white rounded-2xl px-5 py-4 group shadow-[0_6px_0_0_#0A0B1F]">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-[var(--lime)] text-[11px] font-bold">아이 부자되는 가장 빠른 길 🚀</p>
-            <p class="text-[15px] font-extrabold mt-0.5">사이다뱅크 아이계좌 알아보기</p>
+    <div class="absolute bottom-0 left-0 right-0 bg-[var(--cream)]/95 backdrop-blur border-t border-[var(--line)] px-5 pt-3 pb-7">
+      <p class="text-center text-[12px] font-bold text-[var(--ink)] mb-2">💡 우리 아이 부자 기질, 지금 키워줄 수 있어요</p>
+      <a href="https://saidabankdirect.com/accounts-minors/" target="_blank" rel="noopener noreferrer" class="btn-press cta-pulse relative overflow-hidden block w-full bg-[var(--blue)] text-white rounded-2xl px-5 py-4 group">
+        <div class="flex items-center justify-between gap-3">
+          <div class="text-left">
+            <p class="text-[var(--lime)] text-[11px] font-extrabold">매월 용돈도, 부자 습관도 한 번에</p>
+            <p class="text-[18px] font-black mt-0.5 leading-tight tracking-tight">사이다뱅크 아이통장 만들기</p>
           </div>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="shrink-0 transition-transform group-hover:translate-x-1"><path d="M5 12h14m-6-6 6 6-6 6" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="shrink-0 w-9 h-9 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:translate-x-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
         </div>
       </a>
+      <p class="text-center text-[10px] text-[var(--muted)] mt-2">개설 수수료 0원 · 비대면 5분이면 끝</p>
     </div>
   </section>
 
@@ -371,6 +385,7 @@ function previewImage(event){
       document.getElementById('photo-preview').src = e.target.result;
       document.getElementById('res-img').src = e.target.result;
       document.getElementById('res-mini-photo').classList.remove('hidden');
+      window._hasPhoto = true;
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -382,6 +397,7 @@ function resetPhoto(event){
   document.getElementById('photo-uploader').classList.remove('hidden');
   document.getElementById('photo-preview-container').classList.add('hidden');
   document.getElementById('res-mini-photo').classList.add('hidden');
+  window._hasPhoto = false;
 }
 
 function startAnalysis(){
@@ -397,7 +413,9 @@ function startAnalysis(){
 
   nextStep('input','loading');
 
-  const texts = ["초년 재물운 보는 중","관상 흐름 읽는 중","사주 오행 맞추는 중","닮은 부자 찾는 중"];
+  const texts = window._hasPhoto
+    ? ["초년 재물운 보는 중","관상 흐름 읽는 중","사주 오행 맞추는 중","닮은 부자 찾는 중"]
+    : ["초년 재물운 보는 중","사주 오행 맞추는 중","닮은 부자 찾는 중"];
   let i = 0;
   const itv = setInterval(()=>{
     if(i < texts.length-1){ i++; document.getElementById('loading-text').innerText = texts[i]; }
@@ -418,7 +436,11 @@ function generateResult(){
   document.getElementById('res-en').innerText = r.en;
   document.getElementById('res-tagline').innerText = r.tagline;
   document.getElementById('res-saju').innerText = r.saju;
-  document.getElementById('res-physiognomy').innerText = r.physiognomy;
+  if(window._hasPhoto){
+    document.getElementById('res-physiognomy').innerText = r.physiognomy;
+  } else {
+    document.getElementById('res-physiognomy').innerText = '사진을 첨부하지 않아 관상까지는 분석하지 못했어요. 다음엔 사진도 올려보세요! 📸';
+  }
 
   // 사주 요약(일주 + 오행 분포) 표시
   const summary = document.getElementById('res-saju-summary');
@@ -436,6 +458,7 @@ function restart(){
   document.getElementById('photo-uploader').classList.remove('hidden');
   document.getElementById('photo-preview-container').classList.add('hidden');
   document.getElementById('res-mini-photo').classList.add('hidden');
+  window._hasPhoto = false;
   document.getElementById('loading-text').innerText = '초년 재물운 보는 중';
   nextStep('result','home');
 }
