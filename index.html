@@ -66,20 +66,20 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
   <!-- ============ HOME ============ -->
   <section id="step-home" class="absolute inset-0 flex flex-col bg-[var(--cream)]">
     <!-- 떠다니는 말풍선 카피 + 장식 -->
-    <div class="absolute top-[11%] left-[6%] floaty z-0" style="--r:-7deg;">
+    <div class="absolute top-[20%] left-[6%] floaty z-0" style="--r:-7deg;">
       <div class="bubble bubble-tl bg-[var(--butter)] text-[var(--ink)] font-extrabold text-[14px] px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_-6px_rgba(224,164,88,.6)]">
         엄빠 노후는<br>너에게 달렸다 🙏
       </div>
     </div>
-    <div class="absolute top-[22%] right-[5%] floaty z-0" style="--r:8deg; animation-delay:1s;">
+    <div class="absolute top-[31%] right-[5%] floaty z-0" style="--r:8deg; animation-delay:1s;">
       <div class="bubble bubble-tr bg-[var(--coral)] text-white font-extrabold text-[14px] px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_-6px_rgba(255,107,92,.6)]">
         건물주 떡잎<br>감별기 👀
       </div>
     </div>
-    <div class="absolute top-[34%] left-[14%] floaty z-0" style="animation-delay:1.8s;">
+    <div class="absolute top-[42%] left-[14%] floaty z-0" style="animation-delay:1.8s;">
       <div class="w-7 h-7 rounded-full bg-[var(--lime)] shadow-md"></div>
     </div>
-    <div class="absolute top-[9%] right-[30%] floaty z-0" style="animation-delay:.5s;">
+    <div class="absolute top-[19%] right-[28%] floaty z-0" style="animation-delay:.5s;">
       <div class="w-9 h-9 rounded-full bg-[var(--butter)] flex items-center justify-center text-lg font-black text-[var(--ink)] shadow-md">₩</div>
     </div>
 
@@ -92,7 +92,7 @@ body{ font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",Robot
       </div>
 
       <div class="mt-auto">
-        <p class="pop d2 text-[13px] font-extrabold text-[var(--blue)] mb-2 tracking-tight">사이다뱅크</p>
+        <p class="pop d2 text-[13px] font-extrabold text-[var(--blue)] mb-2 tracking-tight">부자의 첫걸음은 사이다뱅크 아이통장부터</p>
         <h1 class="pop d2 tight text-[40px] leading-[1.18] font-extrabold text-[var(--ink)]">
           우리 아이는<br>
           <span class="relative inline-block">
@@ -298,26 +298,52 @@ function analyzeSaju(y, m, d, hour){
   let dominant = ilgan, max = -1;
   for(const e of ["목","화","토","금","수"]){ if(count[e] > max){ max = count[e]; dominant = e; } }
   const pillar = STEMS[dp.stemIdx] + BRANCHES[dp.branchIdx];
-  return { ilgan, dominant, count, pillar, hasHour };
+  return { ilgan, dominant, count, pillar, hasHour, branchIdx: dp.branchIdx };
 }
 
-// ===== 오행별 자산가 (목·화·토·금·수) =====
+// ===== 오행별 자산가 (각 오행 2명, 총 10명) =====
+// 같은 오행 내에서는 일지(地支)의 음양으로 결정론적으로 선택
 const richByElement = {
-  목: { name:"정주영", en:"현대 창업주", type:"목(木)의 기운", tagline:"시련은 있어도 실패는 없는, 불굴의 거상",
-       saju:"오행 중 목(木)의 기운이 강직하게 뻗어, 어떤 풍파에도 스스로 길을 개척하는 자수성가형 사주예요.",
-       physiognomy:"하관이 듬직해 말년으로 갈수록 부가 커지고, 눈썹이 수려해 사람을 이끄는 우두머리상이에요." },
-  화: { name:"일론 머스크", en:"Elon Musk", type:"화(火)의 기운", tagline:"미래를 설계하는 혁신가, 거침없는 도전자",
-       saju:"오행 중 화(火)의 기운이 활활 타올라, 번뜩이는 아이디어로 무에서 유를 만드는 혁신가 기질이 가득해요.",
-       physiognomy:"이마가 넓고 시원해 관록운이 좋고, 눈매가 또렷해 정한 목표는 끝내 이뤄내는 상이에요." },
-  토: { name:"이병철", en:"삼성 창업주", type:"토(土)의 기운", tagline:"대한민국 산업의 기틀을 다진 사업보국의 선구자",
-       saju:"오행 중 토(土)의 기운이 두텁고 안정적이라, 조직을 듬직하게 이끌고 큰 사업을 일으킬 재물운을 타고났어요.",
-       physiognomy:"코의 준두가 단단하고 힘이 있어 평생 재물이 마르지 않고, 사람 보는 통찰이 깊은 상이에요." },
-  금: { name:"워렌 버핏", en:"Warren Buffett", type:"금(金)의 기운", tagline:"가치 투자의 거장, 인내가 만들어낸 부의 품격",
-       saju:"오행 중 금(金)의 기운이 뚜렷해 재물을 야무지게 관리하고, 길게 굴리는 판단력이 독보적이에요.",
-       physiognomy:"귓볼이 두텁고 눈빛이 깊어, 유행에 흔들리지 않는 대기만성형 부자상이에요." },
-  수: { name:"제프 베이조스", en:"Jeff Bezos", type:"수(水)의 기운", tagline:"흐름을 읽고 판을 키우는, 유연한 전략가",
-       saju:"오행 중 수(水)의 기운이 깊고 유연해, 시장의 흐름을 영리하게 읽고 기회를 넓혀가는 사업가 기질이 강해요.",
-       physiognomy:"이마가 둥글고 눈빛이 맑아 두뇌 회전이 빠르며, 상황에 맞춰 자유자재로 변화하는 영리한 상이에요." }
+  목: [
+    { name:"정주영", en:"현대 창업주", type:"목(木)의 기운", tagline:"시련은 있어도 실패는 없는, 불굴의 거상",
+      saju:"오행 중 목(木)의 기운이 강직하게 뻗어, 어떤 풍파에도 스스로 길을 개척하는 자수성가형 사주예요.",
+      physiognomy:"하관이 듬직해 말년으로 갈수록 부가 커지고, 눈썹이 수려해 사람을 이끄는 우두머리상이에요." },
+    { name:"이재용", en:"삼성 회장", type:"목(木)의 기운", tagline:"뿌리 깊은 가업을 이어 새 시대를 여는 리더",
+      saju:"오행 중 목(木)의 기운이 곧게 자라, 물려받은 토대를 더 크게 키워내는 성장형 사주예요.",
+      physiognomy:"이마가 단정하고 눈매가 차분해, 책임을 묵묵히 감당하며 큰 조직을 안정적으로 이끄는 상이에요." }
+  ],
+  화: [
+    { name:"일론 머스크", en:"Elon Musk", type:"화(火)의 기운", tagline:"미래를 설계하는 혁신가, 거침없는 도전자",
+      saju:"오행 중 화(火)의 기운이 활활 타올라, 번뜩이는 아이디어로 무에서 유를 만드는 혁신가 기질이 가득해요.",
+      physiognomy:"이마가 넓고 시원해 관록운이 좋고, 눈매가 또렷해 정한 목표는 끝내 이뤄내는 상이에요." },
+    { name:"젠슨 황", en:"Jensen Huang", type:"화(火)의 기운", tagline:"한 우물을 끝까지 판, 시대를 만든 승부사",
+      saju:"오행 중 화(火)의 기운이 뜨겁게 집중돼, 한 분야에 몰두해 끝내 정상에 오르는 외길 승부사형 사주예요.",
+      physiognomy:"눈빛이 강렬하고 광대가 또렷해, 긴 시간 한 길을 파고들어 마침내 크게 빛을 보는 상이에요." }
+  ],
+  토: [
+    { name:"이병철", en:"삼성 창업주", type:"토(土)의 기운", tagline:"대한민국 산업의 기틀을 다진 사업보국의 선구자",
+      saju:"오행 중 토(土)의 기운이 두텁고 안정적이라, 조직을 듬직하게 이끌고 큰 사업을 일으킬 재물운을 타고났어요.",
+      physiognomy:"코의 준두가 단단하고 힘이 있어 평생 재물이 마르지 않고, 사람 보는 통찰이 깊은 상이에요." },
+    { name:"유재석", en:"국민 MC · 기부 천사", type:"토(土)의 기운", tagline:"번 만큼 베푸는, 신뢰가 곧 자산인 사람",
+      saju:"오행 중 토(土)의 기운이 넉넉하고 따뜻해, 성실하게 쌓은 부를 아낌없이 나누는 덕망형 사주예요.",
+      physiognomy:"얼굴선이 부드럽고 인중이 또렷해, 사람이 절로 따르고 베풀수록 복이 채워지는 상이에요." }
+  ],
+  금: [
+    { name:"워렌 버핏", en:"Warren Buffett", type:"금(金)의 기운", tagline:"가치 투자의 거장, 인내가 만들어낸 부의 품격",
+      saju:"오행 중 금(金)의 기운이 뚜렷해 재물을 야무지게 관리하고, 길게 굴리는 판단력이 독보적이에요.",
+      physiognomy:"귓볼이 두텁고 눈빛이 깊어, 유행에 흔들리지 않는 대기만성형 부자상이에요." },
+    { name:"아이유", en:"아티스트 · 기부 천사", type:"금(金)의 기운", tagline:"빛나는 재능을 조용히 나누는, 단단한 사람",
+      saju:"오행 중 금(金)의 기운이 맑고 단단해, 자기 재능으로 부를 이루고 그것을 따뜻하게 나누는 사주예요.",
+      physiognomy:"눈빛이 맑고 이목구비가 또렷해, 재능이 오래 사랑받고 베풂으로 복이 더 쌓이는 상이에요." }
+  ],
+  수: [
+    { name:"제프 베이조스", en:"Jeff Bezos", type:"수(水)의 기운", tagline:"흐름을 읽고 판을 키우는, 유연한 전략가",
+      saju:"오행 중 수(水)의 기운이 깊고 유연해, 시장의 흐름을 영리하게 읽고 기회를 넓혀가는 사업가 기질이 강해요.",
+      physiognomy:"이마가 둥글고 눈빛이 맑아 두뇌 회전이 빠르며, 상황에 맞춰 자유자재로 변화하는 영리한 상이에요." },
+    { name:"김선태", en:"충주맨 · 일잘러", type:"수(水)의 기운", tagline:"전 국민이 아는데… 부는 아직 오는 중!",
+      saju:"오행 중 수(水)의 기운이 자유롭게 흘러, 누구보다 빠른 센스로 온 세상이 다 아는 유명세를 떨치는 사주예요. 다만 재물운은 살짝 늦게 트이는 편! 하지만 이런 사주야말로 대기만성(大器晚成)의 전형이라, 쌓인 인지도가 큰 부로 터지는 순간이 분명 옵니다. 앞으로가 진짜 기대되는 떡잎이에요. 🚀",
+      physiognomy:"표정이 살아있고 눈웃음이 매력적이라 사람을 끌어모으는 인기상이며, 늦게 피는 꽃처럼 말년 재물운이 활짝 열리는 대기만성형 관상이에요." }
+  ]
 };
 const elementInfo = {
   목:{label:"목 (木)", color:"#4FB477"}, 화:{label:"화 (火)", color:"#FF6B5C"},
@@ -382,7 +408,9 @@ function startAnalysis(){
 
 function generateResult(){
   const s = window._sajuResult;
-  const r = richByElement[s.dominant];
+  const list = richByElement[s.dominant];
+  // 같은 오행 내 2명 중 결정론적 선택 (일지 음양: 짝수=0, 홀수=1)
+  const r = list[s.branchIdx % 2];
   const info = elementInfo[s.dominant];
 
   document.getElementById('res-type').innerText = r.type;
